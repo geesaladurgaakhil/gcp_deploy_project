@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: pythonapp
-        image: us-central1-docker.pkg.dev/eastern-polygon-477000-v7/python-app:latest
+        image: us-central1-docker.pkg.dev/eastern-polygon-477000-v7/python-app/python-app:latest
         ports:
         - containerPort: 5000
 ---
