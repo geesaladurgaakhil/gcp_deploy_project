@@ -32,3 +32,29 @@ jobs:
 
       - name: security scan
         run: bandit -r . || true
+
+  containerize:
+    name: Build Docker image and push image
+    runs-on: ubuntu-latest
+    need: build
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      
+      - name: Authenctication to GCP_PROJECT_ID
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+        
+      - name: Configure Docker for artifcat
+        run: |
+          gcloud auth configure-docker ${REGION}-docker.pkg.dev
+      
+      - name: Build Docker image
+        run: |
+          docker build -t ${REGION}-docker.pkg.dev/${PROJECT_ID}/${REPO_NAME}/${IMAGE_NAME}:latest
+      
+      - name: Push image to registry
+        run: |
+          docker push ${REGION}-docker.pkg.dev/${PROJECT_ID}/${REPO_NAME}/${IMAGE_NAME}:latest
