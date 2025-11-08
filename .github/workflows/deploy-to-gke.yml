@@ -58,3 +58,27 @@ jobs:
       - name: Push image to registry
         run: |
           docker push ${REGION}-docker.pkg.dev/${PROJECT_ID}/${REPO_NAME}/${IMAGE_NAME}:latest
+
+  deploy:
+    name: Deploy to GKE
+    runs-on: ubuntu-latest
+    needs: containerize
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      
+      - name: Authenctication to GCP_PROJECT_ID
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+      
+      - name: Get GKE credentials
+        uses: google-github-actions/get-gke-credentials@v2
+        with:
+          cluster_name: ${{ env.CLUSTER_NAME }}
+          location: ${{ env. GKE_ZONE }}
+      
+      - name: Deploy to GKE
+        run: |
+          kubcetl apply -f k8s-deployment.yml
