@@ -6,7 +6,7 @@ on:
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
   REGION: ${{ secrets.GCP_REGION }}
-  REPO_NAME: gcp_deploy_project
+  REPO_NAME: python-app
   IMAGE_NAME: python-app
   CLUSTER_NAME: ${{ secrets.GKE_CLUSTER }}
   GKE_ZONE: ${{ secrets.GCP_ZONE }}
