@@ -1,6 +1,6 @@
 # ------- Build Stage -------#
 
-FROM python:3.11-slim AS builder
+FROM python:3.14-slim AS builder
 
 WORKDIR /app
 
@@ -10,7 +10,7 @@ RUN pip install --no-cache-dir --prefix=/install -r requirements.txt
 
 # -------- Runtime Stage -----#
 
-FROM python:3.11-slim
+FROM python:3.14-slim
 
 WORKDIR /app
 
