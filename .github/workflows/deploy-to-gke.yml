@@ -1,0 +1,34 @@
+name: Deploy python app to GKE
+
+on:
+  workflow_dispatch:
+
+env:
+  PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+  REGION: ${{ secrets.GCP_REGION }}
+  REPO_NAME: gcp_deploy_project
+  IMAGE_NAME: python-app
+  CLUSTER_NAME: ${{ secrets.GKE_CLUSTER }}
+  GKE_ZONE: ${{ secrets.GCP_ZONE }}
+
+jobs:
+  build:
+    name: Build&Test Application
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4
+
+      - name: setup python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install pytest bandit
+
+      - name: security scan
+        run: bandit -r . || true
