@@ -53,7 +53,7 @@ jobs:
       
       - name: Build Docker image
         run: |
-          docker build -t ${REGION}-docker.pkg.dev/${PROJECT_ID}/${REPO_NAME}/${IMAGE_NAME}:latest
+          docker buildx build -t ${REGION}-docker.pkg.dev/${PROJECT_ID}/${REPO_NAME}/${IMAGE_NAME}:latest
       
       - name: Push image to registry
         run: |
