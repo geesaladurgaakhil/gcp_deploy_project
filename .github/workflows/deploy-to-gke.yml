@@ -57,7 +57,7 @@ jobs:
 
       - name: Push image to registry
         run: |
-          docker push ${REGION}-docker.pkg.dev/${PROJECT_ID}/${REPO_NAME}/${IMAGE_NAME}:${{ github.run_id }
+          docker push ${REGION}-docker.pkg.dev/${PROJECT_ID}/${REPO_NAME}/${IMAGE_NAME}:${{ github.run_id }}
 
   deploy:
     name: Deploy to GKE
