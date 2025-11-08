@@ -1,7 +1,8 @@
 name: Deploy python app to GKE
 
 on:
-  workflow_dispatch:
+  push:
+    branches: [ main ]
 
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
@@ -82,7 +83,7 @@ jobs:
       - name: Update image tag
         run: |
           sed -i "s|IMAGE_PLACEHOLDER|${REGION}-docker.pkg.dev/${PROJECT_ID}/${REPO_NAME}/${IMAGE_NAME}:${{ github.run_id }}|g" k8s-deployment.yml
-          
+
       - name: Deploy to GKE
         run: |
           kubectl apply -f k8s-deployment.yml
