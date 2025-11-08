@@ -9,7 +9,7 @@ env:
   REPO_NAME: python-app
   IMAGE_NAME: python-app
   CLUSTER_NAME: ${{ secrets.GKE_CLUSTER }}
-  GKE_ZONE: ${{ secrets.GCP_ZONE }}
+  GKE_ZONE: ${{ secrets.GKE_ZONE }}
 
 jobs:
   build:
@@ -77,7 +77,7 @@ jobs:
         uses: google-github-actions/get-gke-credentials@v2
         with:
           cluster_name: ${{ env.CLUSTER_NAME }}
-          location: ${{ env. GKE_ZONE }}
+          location: ${{ env.GKE_ZONE }}
       
       - name: Deploy to GKE
         run: |
